@@ -29,7 +29,7 @@ export class NavbarComponent implements OnInit{
     password: string;
     rememberMe: boolean;
     username: string;
-    regist: boolean;
+    regist: boolean = false;
 
 
 
@@ -46,9 +46,12 @@ export class NavbarComponent implements OnInit{
     ) {
         this.version = VERSION ? 'v' + VERSION : '';
         this.isNavbarCollapsed = true;
+        this.regist=false;
     }
 
     ngOnInit() {
+        this.regist=false;
+        this.isNavbarCollapsed = true;
         this.profileService.getProfileInfo().then((profileInfo) => {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
@@ -62,6 +65,9 @@ export class NavbarComponent implements OnInit{
     }
 
     isAuthenticated() {
+        if(this.router.url === "/"){
+            this.regist = false;
+        }
         return this.principal.isAuthenticated();
     }
 
@@ -87,9 +93,7 @@ export class NavbarComponent implements OnInit{
 
     toggle()
     {
-
         this.regist=true;
-
     }
 
 userlogin()
